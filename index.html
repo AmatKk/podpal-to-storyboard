@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Podpáľ to a choď pešo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: storyboard sheet — scene slug bands (screenplay style), then a wrapping grid of 16:9 pencil panels with shot notes underneath. Graphite on cool paper, non-photo-blue for camera notation, fire orange only for blinkers, sunset and flame. */
+:root{
+  --bg:#e3e7e9; --sheet:#fafbfb; --ink:#26292d; --shade:#c7cdd2; --muted:#5f676e;
+  --line:#c2c9ce; --blue:#3f97cf; --fire:#e2601a;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141719; --sheet:#1e2226; --ink:#dde2e5; --shade:#3b4248; --muted:#9aa3aa;
+  --line:#343b41; --blue:#58aee0; --fire:#ff7b35; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141719; --sheet:#1e2226; --ink:#dde2e5; --shade:#3b4248; --muted:#9aa3aa;
+  --line:#343b41; --blue:#58aee0; --fire:#ff7b35; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-block:40px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header{display:grid;gap:18px;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,8vw,92px);line-height:.92;margin:0;
+  text-transform:uppercase;letter-spacing:.005em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--fire)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.facts b{color:var(--ink);font-weight:500}
+.legend{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend svg{width:34px;height:12px}
+
+.scene{margin-top:52px}
+.slug{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;padding-bottom:14px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+.slug h2{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;margin:0;text-transform:uppercase}
+.slug .where{font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.slug .light{font-size:13px;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:30px 22px}
+.shot{display:flex;flex-direction:column;gap:8px;min-width:0}
+.frame{position:relative;background:var(--sheet);border:2px solid var(--ink);aspect-ratio:16/9;max-width:100%;overflow:hidden}
+.frame svg{display:block;width:100%;height:100%}
+.tag{position:absolute;top:6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;line-height:1.3}
+.tag.alt{right:6px;background:var(--ink);color:var(--sheet)}
+.tag.setup{left:6px;border:1.5px solid var(--blue);color:var(--blue);background:var(--sheet)}
+.tag.vo{right:6px;background:var(--fire);color:var(--sheet)}
+.head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.num{font-family:var(--display);font-weight:700;font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.size{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ink);padding:1px 6px}
+.cam{font-family:var(--mono);font-size:12px;color:var(--blue)}
+.act{margin:0;font-size:14.5px}
+.note{margin:0;font-size:13.5px;color:var(--muted)}
+.note b{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-right:6px}
+.note.altn b{background:var(--ink);color:var(--sheet);padding:0 4px}
+.note.von b{background:var(--fire);color:var(--sheet);padding:0 4px}
+.cont{grid-column:1/-1;font-size:13.5px;color:var(--muted);border-left:2px solid var(--blue);padding:2px 0 2px 12px;margin:0}
+
+.sheet{margin-top:64px;padding-top:24px;border-top:2px solid var(--ink);display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.sheet h3{font-family:var(--display);font-weight:700;font-size:22px;text-transform:uppercase;margin:0 0 8px}
+.sheet ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.sheet li span{color:var(--muted)}
+
+/* sketch styles */
+.art{filter:url(#rough)}
+.sk .s{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.sk .s.f{fill:var(--shade)}
+.sk .s.w{fill:var(--sheet)}
+.sk .s.k{fill:var(--ink)}
+.sk .soft{stroke:var(--muted);stroke-width:1}
+.sk .dash{stroke-dasharray:6 6}
+.sk .b{fill:none;stroke:var(--blue);stroke-width:1.1;vector-effect:non-scaling-stroke}
+.sk .bf{fill:var(--blue);opacity:.16;stroke:none}
+.sk .ghost .s{stroke:var(--blue);stroke-width:1}
+.sk .ghost .s.f,.sk .ghost .s.w,.sk .ghost .s.k{fill:none}
+.sk .fire{fill:var(--fire);fill-opacity:.85;stroke:var(--fire);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.sk .fsoft{fill:var(--fire);fill-opacity:.2;stroke:var(--fire);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.sk .spark{fill:none;stroke:var(--fire);stroke-width:1.8;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.sk .gl{fill:none;stroke:var(--sheet);stroke-width:1.2;opacity:.55;vector-effect:non-scaling-stroke}
+.sk .cut{stroke:var(--sheet);stroke-width:3}
+.sk .needle{fill:none;stroke:var(--ink);stroke-width:3.2;stroke-linecap:round}
+.sk .cam{fill:none;stroke:var(--blue);stroke-width:2.2;stroke-linecap:round;marker-end:url(#arr);vector-effect:non-scaling-stroke}
+.sk text{font-family:var(--display);fill:var(--ink)}
+.sk .sfx{font-size:17px;font-weight:700;letter-spacing:.04em}
+.sk .lbl{font-family:var(--mono);font-size:8px;letter-spacing:.06em}
+.sk .lblw{font-family:var(--mono);font-size:8px;letter-spacing:.06em;fill:var(--sheet)}
+.sk .price{font-family:var(--mono);font-size:10px}
+.sk .camt{font-family:var(--mono);font-size:9.5px;fill:var(--blue)}
+.sk .say{font-family:var(--body);font-style:italic;font-size:12px}
+.sk .logo{font-size:7px;font-weight:700;letter-spacing:.14em}
+.arrhead{fill:var(--blue)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.2"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path class="arrhead" d="M0 0 L10 5 L0 10 z"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Storyboard · Dacia spot · návrh</div>
+    <h1>Podpáľ to a <em>choď pešo</em></h1>
+    <div class="facts" id="facts"></div>
+    <div class="legend">
+      <span><svg viewBox="0 0 34 12"><path d="M2 6 L26 6" stroke="var(--blue)" stroke-width="2.2" fill="none" marker-end="url(#arr)"/></svg>pohyb kamery</span>
+      <span><svg viewBox="0 0 34 12"><path d="M2 3 L32 3 M2 9 L32 9" stroke="var(--blue)" stroke-width="1.1" fill="none"/></svg>pozadie / mimo ostrosti</span>
+      <span><b style="font-family:var(--mono);font-size:10px;background:var(--ink);color:var(--sheet);padding:1px 5px">ALT</b>natočiť aj náhradnú verziu</span>
+      <span><b style="font-family:var(--mono);font-size:10px;border:1.5px solid var(--blue);color:var(--blue);padding:0 5px">SETUP A</b>rovnaké postavenie kamery</span>
+    </div>
+  </header>
+  <main id="board"></main>
+
+  <section class="sheet">
+    <div>
+      <h3>Natočiť navyše</h3>
+      <ul>
+        <li>4.5a — kufor sa otvorí hneď <span>(ak bude gag v strihu príliš natiahnutý)</span></li>
+        <li>4.9 — zapaľovač chytí na prvý pokus <span>(čistá verzia)</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Rekvizity</h3>
+      <ul>
+        <li>Dacia, čím staršia, tým lepšie</li>
+        <li>Kľúč s diaľkovým ovládačom</li>
+        <li>Zapaľovač s logom Dacia</li>
+        <li>Regál cigariet v trafike</li>
+        <li>Bandaska na benzín</li>
+        <li>Slnečné okuliare <span>(návrh)</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Lokácie a svetlo</h3>
+      <ul>
+        <li>Bytovka, trafika, pumpa <span>· plné slnko</span></li>
+        <li>Prázdna cesta „púšť“ <span>· západ slnka, golden hour</span></li>
+        <li>SETUP A = 4.5a, 4.5b, 4.8, 4.10 <span>· kamera ostáva stáť, točiť za sebou</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Zvuk a hudba</h3>
+      <ul>
+        <li>Indie rock v duchu Arctic Monkeys cez celý spot</li>
+        <li>Gagy stoja na zvuku: klik, štartér, ťuk, škrt</li>
+        <li>VO na konci: „Dacia. Podpáľ to a choď pešo.“</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------- drawing primitives (viewBox 320×180) ---------- */
+const G=(t,s)=>`<g transform="${t}">${s}</g>`;
+const ghost=s=>`<g class="ghost">${s}</g>`;
+const T=(x,y,str,cls='sfx',ex='')=>`<text class="${cls}" x="${x}" y="${y}" ${ex}>${str}</text>`;
+const r1=n=>Math.round(n*10)/10;
+
+function sun(x,y,r){let s=`<circle class="s w" cx="${x}" cy="${y}" r="${r}"/>`;
+  for(let i=0;i<8;i++){const a=i*Math.PI/4,c=Math.cos(a),n=Math.sin(a);
+    s+=`<path class="s" d="M${r1(x+c*(r+4))} ${r1(y+n*(r+4))} L${r1(x+c*(r+10))} ${r1(y+n*(r+10))}"/>`;}
+  return s;}
+
+function sand(n,seed,avoid){let d='',r=seed;const rnd=()=>{r=(r*9301+49297)%233280;return r/233280};
+  for(let i=0;i<n;i++){const x=rnd()*320,y=rnd()*180;if(avoid&&avoid(x,y))continue;d+=`M${r1(x)} ${r1(y)} l3 0 `;}
+  return `<path class="s soft" d="${d}"/>`;}
+
+/* person: feet at (x,y), height 100*s, dir 1 = facing right */
+function person(x,y,s,o={}){
+  const d=o.dir||1,p=o.pose||'stand';let b='';
+  if(p==='crouch'){
+    b=`<path class="s" d="M-2 -23 L14 -18 L10 0 L18 0 M2 -22 L-8 -10 L-6 0 L2 0"/>
+      <path class="s f" d="M2 -50 L18 -47 L10 -21 L-6 -24 Z"/>
+      <path class="s" d="M16 -45 L26 -22 L30 -9"/>
+      <circle class="s w" cx="20" cy="-57" r="8"/>
+      <path class="s k" d="M12 -59 Q14 -67 21 -66 Q28 -65 28 -58 Q22 -62 12 -59Z"/>`;
+  }else{
+    const legs=p==='walk'?'M-5 -46 L-13 0 L-7 0 M5 -46 L11 0 L17 0':'M-6 -46 L-7 0 L-1 0 M6 -46 L7 0 L13 0';
+    const back=p==='walk'?'M-12 -76 L-19 -52':'M-12 -76 L-15 -48';
+    const front=p==='reach'?'M12 -76 L33 -58':p==='walk'?'M12 -76 L18 -50':'M12 -76 L17 -50';
+    b=`<path class="s" d="${legs} ${back}"/>
+      <path class="s f" d="M-11 -80 L11 -80 Q13 -79 13 -76 L11 -46 L-11 -46 L-13 -76 Q-13 -79 -11 -80 Z"/>
+      <path class="s" d="${front}"/>
+      <circle class="s w" cx="0" cy="-90" r="8"/>
+      <path class="s k" d="M-8 -92 Q-6 -100 1 -99 Q8 -98 8 -91 Q2 -95 -8 -92Z"/>`;
+    if(o.glasses)b+=`<path class="s k" d="M-7 -92 L-1 -92 L-1 -89 L-7 -89 Z M1 -92 L7 -92 L7 -89 L1 -89 Z"/>`;
+  }
+  return G(`translate(${x},${y}) scale(${s*d},${s})`,b);}
+
+/* car side view, local 100 × 42, ground y=42, faces right */
+const CAR=`<ellipse class="bf" cx="51" cy="42" rx="50" ry="2.5"/>
+<path class="s f" d="M3 31 L3 12 Q3 5 10 5 L64 4 Q67 4 69 6 L80 15 L95 18 Q99 19 99 24 L99 30 Q99 32 96 32 L6 32 Q3 32 3 31 Z"/>
+<path class="s w" d="M8 8 L8 15 L21 15 L21 7.6 Z M25 7.5 L25 15 L50 15 L50 7.3 Z M54 7.2 L54 15 L77 15 L67 7 Z"/>
+<path class="s" d="M23 7 L23 31 M52 7 L52 31 M78 15 L80 28 M30 19 L35 19 M58 19 L63 19 M3 24 L99 24 M12 2.6 L60 2.2"/>
+<path class="s k" d="M3 12 L6 12 L6 18 L3 18 Z"/><path class="s" d="M93 20 L98 21.5"/>
+<circle class="s w" cx="22" cy="34" r="8"/><circle class="s" cx="22" cy="34" r="3.5"/>
+<circle class="s w" cx="80" cy="34" r="8"/><circle class="s" cx="80" cy="34" r="3.5"/>`;
+const BLINK=`<path class="spark" d="M0 13 L-5 10 M0 15 L-6 15 M0 17 L-5 20 M101 20 L106 17 M101 22 L107 22 M101 24 L106 27"/>`;
+function car(x,y,s,o={}){
+  const t=o.flip?`translate(${x+100*s},${y-42*s}) scale(${-s},${s})`:`translate(${x},${y-42*s}) scale(${s})`;
+  return G(t,CAR+(o.blink?BLINK:''));}
+
+/* car rear view, local 60 wide, ground y=50 */
+function carRear(x,y,s,open){
+  const body=`<ellipse class="bf" cx="30" cy="50" rx="30" ry="2.5"/>
+  <path class="s k" d="M6 44 L14 44 L14 50 L6 50 Z M46 44 L54 44 L54 50 L46 50 Z"/>
+  <path class="s f" d="M4 44 L4 22 Q4 18 8 17 L12 6 Q13 3 17 3 L43 3 Q47 3 48 6 L52 17 Q56 18 56 22 L56 44 Z"/>`;
+  const hatch=open
+    ?`<path class="s k" d="M10 8 L50 8 L52 36 L8 36 Z"/><path class="s f" d="M12 4 L8 -16 L52 -16 L48 4 Z"/><path class="s w" d="M13 -13 L47 -13 L46 0 L14 0 Z"/>`
+    :`<path class="s w" d="M14 6 L46 6 L49 16 L11 16 Z"/><path class="s" d="M9 30 L51 30"/><path class="s w" d="M22 31 L38 31 L38 36 L22 36 Z"/>`;
+  return G(`translate(${x},${y-50*s}) scale(${s})`,body+hatch+
+    `<path class="s w" d="M5 21 L11 21 L11 29 L5 29 Z M49 21 L55 21 L55 29 L49 29 Z"/><path class="s" d="M3 38 L57 38"/>`);}
+
+/* car top view (drone) */
+const carTop=(x,y,rot,blink)=>G(`translate(${x},${y}) rotate(${rot})`,
+  `<rect class="s f" x="-18" y="-8" width="36" height="16" rx="4"/>
+   <path class="s w" d="M6 -6 L12 -6 L12 6 L6 6 Z M-13 -6 L-9 -6 L-9 6 L-13 6 Z"/>
+   <rect class="s" x="-9" y="-6" width="15" height="12" rx="1"/>
+   ${blink?`<path class="spark" d="M20 -10 L25 -14 M20 10 L25 14 M-20 -10 L-25 -14 M-20 10 L-25 14"/>`:''}`);
+
+/* jerrycan, bottom-left at (0,0) */
+const can=(x,y,s,rot=0)=>G(`translate(${x},${y}) rotate(${rot}) scale(${s})`,
+  `<path class="s f" d="M2 0 L2 -28 Q2 -32 6 -32 L22 -32 L28 -26 L28 0 Z"/>
+   <path class="s" d="M8 -32 L8 -38 L19 -38 L19 -32 M6 -22 L24 -6 M24 -22 L6 -6"/>
+   <path class="s w" d="M22 -32 L24 -38 L28 -38 L28 -30"/>`);
+
+/* lighter with logo, top-left at (0,0), 20 × 52 */
+const lighter=(x,y,s,rot=0)=>G(`translate(${x},${y}) rotate(${rot}) scale(${s})`,
+  `<path class="s f" d="M2 14 L18 14 L18 50 Q18 52 16 52 L4 52 Q2 52 2 50 Z"/>
+   <path class="s w" d="M3 4 L17 4 L17 14 L3 14 Z"/><circle class="s k" cx="8" cy="9" r="3.2"/>
+   <path class="s" d="M12 4 L12 0 L16 0 L16 4"/>
+   <text class="logo" x="10" y="36" text-anchor="middle" transform="rotate(-90 10 33)">DACIA</text>`);
+
+/* hands: fingers point to +x, sleeve to -x */
+const SLEEVE=`<path class="s f" d="M-52 -14 L0 -12 L0 12 L-52 15 Z"/>`;
+const fist=(x,y,s,rot=0,flip=false)=>G(`translate(${x},${y}) rotate(${rot}) scale(${flip?-s:s},${s})`,
+  SLEEVE+`<path class="s w" d="M0 -13 Q20 -18 30 -10 Q36 -4 34 4 Q30 13 16 13 L0 12 Z"/>
+  <path class="s" d="M30 -6 Q24 -4 20 -6 M33 0 Q26 2 21 0 M31 6 Q25 8 20 6"/>`);
+const point=(x,y,s,rot=0)=>G(`translate(${x},${y}) rotate(${rot}) scale(${s})`,
+  SLEEVE+`<path class="s w" d="M0 -12 Q18 -16 26 -10 L52 -10 Q57 -9 57 -6 Q57 -2 52 -2 L28 -1 Q30 8 22 12 L0 12 Z"/>
+  <path class="s" d="M22 -1 L26 2 M18 6 L24 8"/>`);
+
+const flame=(x,y,w,h)=>`<path class="fire" d="M${x-w/2} ${y} Q${x-w/2} ${y-h*.5} ${x-w*.2} ${y-h*.72} Q${x-w*.1} ${y-h*.45} ${x} ${y-h*.56} Q${x+w*.04} ${y-h*.9} ${x+w*.12} ${y-h} Q${x+w*.26} ${y-h*.62} ${x+w*.32} ${y-h*.58} Q${x+w*.5} ${y-h*.42} ${x+w/2} ${y} Z"/>`;
+
+/* desert, SETUP A background */
+const setupA=()=>`<path class="b" d="M14 108 Q40 100 66 108 M232 112 Q266 102 304 112"/>
+<path class="s" d="M0 120 L320 120 M70 180 L148 120 M290 180 L190 120"/>
+<path class="s soft dash" d="M180 180 L169 120"/>
+<path class="b" d="M14 142 L26 142 M250 150 L266 150 M30 166 L48 166 M262 172 L282 172"/>`;
+
+function ignition(rot,sfx,arrow){
+  return `<path class="b" d="M0 44 Q160 24 320 44 M40 30 L40 60"/>
+  <path class="s f" d="M0 180 L0 128 Q70 96 150 100 Q200 104 232 140 L252 180 Z"/>
+  <circle class="s w" cx="150" cy="118" r="20"/><circle class="s" cx="150" cy="118" r="13"/>
+  ${G(`translate(150,118) rotate(${rot})`,`<path class="s k" d="M-3 -10 L3 -10 L3 10 L-3 10 Z"/><path class="s f" d="M3 -8 Q30 -10 34 0 Q30 10 3 8 Z"/>`)}
+  <path class="s" d="M186 134 Q190 148 184 156"/><rect class="s k" x="172" y="154" width="22" height="13" rx="6"/>
+  ${fist(216,122,1.3,0,true)}
+  <path class="cam" d="M118 82 A 42 42 0 0 1 180 84"/>
+  ${T(18,38,sfx)}
+  ${arrow==='right'?`<path class="cam" d="M236 22 L300 22"/>${T(236,38,'švenk na palivo','camt')}`:''}
+  ${arrow==='left'?`<path class="cam" d="M300 22 L236 22"/>${T(232,38,'švenk späť','camt')}`:''}`;}
+
+/* ---------- panels ---------- */
+const A={};
+
+A['1.1']=()=>{let w='';for(let r=0;r<6;r++)for(let c=0;c<8;c++){if(r===5&&(c===3||c===4))continue;
+    w+=`M${50+c*22} ${32+r*19} h12 v10 h-12 Z `;}
+  return sun(274,32,13)+
+  `<path class="s w" d="M40 150 L40 22 L232 22 L232 150"/><path class="s f" d="${w}"/>
+   <path class="s w" d="M112 116 L160 116 L160 120 L112 120 Z"/><path class="s k" d="M124 122 L148 122 L148 150 L124 150 Z"/>
+   <path class="s" d="M0 150 L320 150 M268 150 L268 112"/>
+   <path class="s f" d="M250 116 Q240 96 256 86 Q262 70 280 76 Q298 74 296 92 Q306 108 288 116 Z"/>
+   <path class="b" d="M150 150 L112 180 M174 150 L214 180"/>`+
+  person(136,151,0.27,{pose:'walk'});};
+
+A['1.2']=()=>{let w='';for(let r=0;r<4;r++)for(let c=0;c<6;c++)w+=`M${30+c*44} ${20+r*34} h20 v16 h-20 Z `;
+  return ghost(`<path class="s" d="${w}"/>`)+
+  `<path class="b" d="M290 20 L120 140"/><circle class="b" cx="236" cy="58" r="7"/><circle class="b" cx="196" cy="86" r="3.5"/>`+
+  sun(290,20,9)+person(160,250,2.0,{glasses:true})+
+  `<path class="cam" d="M40 110 L40 160"/>`+T(48,140,'jazda vzad','camt');};
+
+A['1.3']=()=>ghost(car(-24,176,3.2))+
+  G('translate(146,104) rotate(-12)',`<rect class="s k" x="0" y="-13" width="50" height="26" rx="12"/>
+     <circle class="s w" cx="18" cy="0" r="4.5"/><circle class="s w" cx="33" cy="0" r="4.5"/>
+     <path class="s w" d="M50 -3 L86 -3 L86 2 L82 4 L78 2 L74 4 L70 2 L50 3 Z"/>`)+
+  fist(92,118,2.1,-12)+
+  `<path class="s w" d="M122 92 Q140 78 160 82 Q168 84 166 90 Q150 92 130 100 Z"/>
+   <path class="s soft" d="M246 64 Q254 74 246 84 M256 56 Q270 74 256 92"/>`+
+  T(238,46,'klik.')+T(240,142,'(nič)','lbl');
+
+A['1.4']=()=>ghost(`<path class="s" d="M0 24 L118 24 L118 130 M0 44 L118 44 M0 64 L118 64 M0 84 L118 84 M30 24 L30 130 M70 24 L70 130"/>`)+
+  `<path class="s" d="M0 166 L320 166"/>`+car(46,166,2.2)+person(214,166,1.0,{pose:'reach',dir:-1})+
+  `<path class="s soft" d="M176 102 L166 102 M178 109 L164 109 M176 116 L168 116"/>`+T(236,40,'ťah… ťah…');
+
+A['1.5']=()=>`<path class="s f" d="M-4 -4 L324 -4 L324 184 L-4 184 Z"/>
+  <path class="s w" d="M-4 -4 L324 -4 L324 28 L-4 36 Z"/><path class="s" d="M0 42 L320 34 M0 152 Q160 140 320 148"/>
+  <path class="s w" d="M172 74 L262 70 Q272 70 272 80 L272 92 Q272 100 262 100 L172 102 Q164 102 164 92 L164 82 Q164 74 172 74 Z"/>
+  <path class="s" d="M180 86 L256 84"/>
+  <circle class="s w" cx="138" cy="88" r="11"/>
+  <path class="s f" d="M100 83 L130 85 L130 91 L100 93 Z"/>`+fist(44,94,1.9,0)+
+  `<path class="cam" d="M116 62 A 28 28 0 0 1 162 68"/>`+T(196,140,'cvak.');
+
+A['2.1']=()=>{let p='';for(let r=0;r<3;r++)for(let c=0;c<12;c++)p+=`M${88+c*9} ${57+r*18} h6 v11 h-6 Z `;
+  return ghost(car(-6,142,0.9))+
+  `<path class="s" d="M0 150 L320 150"/>
+   <path class="s f" d="M64 30 L216 30 L216 42 L64 42 Z"/>`+T(140,39.5,'TABAK · NOVINY','lbl','text-anchor="middle"')+
+  `<path class="s w" d="M72 42 L208 42 L208 150 L72 150 Z"/>
+   <path class="s f" d="M84 52 L196 52 L196 110 L84 110 Z"/><path class="s w" d="${p}"/>
+   <path class="s w" d="M78 110 L202 110 L202 116 L78 116 Z"/>
+   <path class="s" d="M88 122 L128 122 L128 146 L88 146 Z M94 130 L122 130 M94 136 L116 136 M144 122 L196 122 L196 146 L144 146 Z"/>`+
+  person(252,151,0.95,{dir:-1});};
+
+A['2.2']=()=>{let p='';for(let r=0;r<4;r++)for(let c=0;c<10;c++){const x=18+c*31,y=8+r*44;p+=`M${x} ${y} h24 v36 h-24 Z M${x} ${y+9} h24 `;}
+  return `<path class="s soft" d="${p}"/><path class="b" d="M0 50 L320 50 M0 94 L320 94 M0 138 L320 138"/>`+
+  lighter(44,30,2.6,-6)+`<path class="bf" d="M30 168 L120 168 L120 176 L30 176 Z"/>`;};
+
+A['2.3']=()=>ghost(`<path class="s" d="M40 92 L280 84 M60 60 L60 92 M250 54 L250 86"/>`)+
+  `<circle class="s w" cx="190" cy="64" r="20"/>
+   <path class="s k" d="M170 60 Q172 40 192 42 Q212 44 210 62 Q196 52 170 60 Z"/>
+   <path class="s k" d="M176 62 L186 62 L186 67 L176 67 Z M194 62 L204 62 L204 67 L194 67 Z"/>
+   <path class="s f" d="M150 130 L154 102 Q162 88 190 88 Q218 88 226 102 L230 130 Z"/>`+
+  lighter(244,90,0.68)+
+  `<path class="s f" d="M214 98 L248 116 L242 124 L208 106 Z"/><ellipse class="s w" cx="250" cy="120" rx="9" ry="7"/>
+   <path class="s f" d="M-4 -4 L324 -4 L324 184 L-4 184 Z M40 18 L40 128 L280 128 L280 18 Z" fill-rule="evenodd"/>
+   <path class="s w" d="M28 128 L292 128 L312 150 L8 150 Z"/>
+   <path class="s w" d="M50 26 L172 26 Q178 26 178 32 L178 48 Q178 54 172 54 L76 54 L60 70 L66 54 L50 54 Q44 54 44 48 L44 32 Q44 26 50 26 Z"/>`+
+  T(54,44,'„Hotovosť, prosím.“','say')+T(18,168,'PREDAVAČ (OS)','lbl');
+
+A['2.4']=()=>ghost(`<path class="s" d="M0 40 L60 40 L60 150 M0 32 L66 32 L66 40 M6 56 L54 56 L54 100 L6 100 Z"/>`)+
+  `<path class="s" d="M0 160 L320 160"/>`+car(40,160,2.0)+
+  `<path class="s k" d="M146 90 L194 88 L196 138 L146 138 Z"/>`+person(170,160,0.9)+
+  `<path class="s f" d="M196 90 L228 98 L228 150 L198 140 Z"/><path class="s w" d="M199 93 L225 100 L225 116 L199 109 Z"/>`;
+
+A['3.1']=()=>`<path class="s f" d="M74 18 L320 18 L320 32 L74 32 Z"/><path class="s" d="M104 32 L104 158 M300 32 L300 70 M0 158 L320 158"/>
+  <path class="s w" d="M226 64 L250 64 L250 158 L226 158 Z"/><path class="s k" d="M230 70 L246 70 L246 79 L230 79 Z"/>`+
+  person(278,158,0.95,{pose:'reach',dir:-1})+car(116,158,1.8,{flip:true})+
+  `<path class="s w" d="M12 22 L66 22 L66 150 L12 150 Z"/><path class="s" d="M39 150 L39 172 M26 172 L52 172"/>
+   <path class="s k" d="M12 22 L66 22 L66 38 L12 38 Z"/>`+T(39,33,'CENY','lblw','text-anchor="middle"')+
+  T(17,58,'95','price')+T(61,58,'1,849','price','text-anchor="end"')+
+  T(17,82,'D','price')+T(61,82,'1,729','price','text-anchor="end"')+
+  T(17,106,'LPG','price')+T(61,106,'0,899','price','text-anchor="end"')+
+  `<path class="s soft" d="M17 64 L61 64 M17 88 L61 88 M17 112 L61 112"/>`;
+
+A['3.2']=()=>ghost(car(-150,170,2.8))+
+  `<path class="s" d="M0 168 L320 168"/>`+can(150,166,2.6)+
+  `<path class="s k" d="M184 64 L196 50 L232 38 L246 46 L232 54 L206 58 L190 68 Z"/>
+   <path class="s" d="M246 42 Q284 24 330 34"/>`+fist(214,38,1.15,-18)+
+  T(30,60,'glg glg glg');
+
+A['3.3']=()=>ghost(`<path class="s" d="M20 70 L44 70 L44 170 M20 70 L20 170 M0 40 L90 40"/>`)+
+  `<path class="s" d="M0 170 L320 170"/>`+carRear(92,170,2,true)+
+  can(150,100,0.95,-28)+
+  `<path class="s soft" d="M208 106 Q198 82 184 76 M206 114 Q192 94 180 88"/>`+
+  person(246,171,1.05,{pose:'reach',dir:-1})+T(26,150,'bum.');
+
+A['3.4']=()=>`<path class="b" d="M-20 180 A 90 90 0 0 1 150 180"/>
+  <path class="s f" d="M0 180 L0 138 Q160 112 320 138 L320 180 Z"/>
+  <rect class="s w" x="80" y="30" width="160" height="98" rx="8"/><rect class="s k" x="88" y="38" width="144" height="82" rx="4"/>
+  <path class="gl" d="M100 50 L130 44 M100 60 L150 50"/>`+point(258,142,1.4,-150)+
+  `<path class="s" d="M174 100 L168 94 M180 96 L180 88 M186 100 L192 94"/>`+T(194,90,'ťuk ťuk','sfx','style="fill:var(--sheet)"');
+
+A['3.5']=()=>`<path class="s f" d="M0 44 L150 44 L150 54 L0 54 Z"/><path class="s" d="M30 54 L30 152 M128 54 L128 152 M0 152 L320 152"/>
+  <path class="s w" d="M70 100 L88 100 L88 152 L70 152 Z"/><path class="b" d="M0 168 L320 168"/>
+  <path class="s soft" d="M150 112 L108 112 M158 124 L98 124 M150 136 L116 136 M166 150 Q160 142 152 146 Q148 138 140 144"/>`+
+  car(170,152,1.15);
+
+const roadAvoid=(x,y)=>Math.abs((x-50)*-180-(y-180)*220)/284<38;
+A['4.1']=()=>sand(70,11,roadAvoid)+
+  `<path class="s" d="M20 180 C80 120 150 80 240 0 M80 180 C140 120 210 80 300 0"/><path class="s soft dash" d="M50 180 C110 120 180 80 270 0"/>`+
+  carTop(164,100,-37,true)+`<path class="cam" d="M240 150 Q262 122 288 96"/>`+T(246,166,'DRON','camt')+
+  T(12,30,'kch… kch… pfff');
+
+A['4.2']=()=>sand(70,23,roadAvoid)+
+  `<path class="s" d="M20 180 C80 120 150 80 240 0 M80 180 C140 120 210 80 300 0"/><path class="s soft dash" d="M50 180 C110 120 180 80 270 0"/>`+
+  carTop(64,170,-37,true)+`<path class="cam" d="M150 120 Q200 70 250 30"/>`+
+  T(196,92,'dron letí ďalej','camt')+T(16,128,'auto stojí','camt');
+
+A['4.3a']=()=>ignition(0,'rrr… rrr…','right');
+A['4.3b']=()=>{let t='';for(let i=0;i<9;i++){const a=(200+i*17.5)*Math.PI/180;
+    t+=`M${r1(160+Math.cos(a)*44)} ${r1(100+Math.sin(a)*44)} L${r1(160+Math.cos(a)*54)} ${r1(100+Math.sin(a)*54)} `;}
+  const a=335*Math.PI/180;
+  return `<path class="s f" d="M-4 -4 L324 -4 L324 184 L-4 184 Z"/><circle class="s w" cx="160" cy="100" r="66"/><circle class="s" cx="160" cy="100" r="60"/>
+  <path class="s" d="${t}"/>`+T(118,92,'E')+T(192,92,'F')+
+  `<path class="needle" d="M160 100 L${r1(160+Math.cos(a)*50)} ${r1(100+Math.sin(a)*50)}"/><circle class="s k" cx="160" cy="100" r="5"/>
+   <path class="s" d="M152 126 L162 126 L162 140 L152 140 Z M162 130 L168 130 L168 138"/>`+
+  point(60,165,1.4,-35)+`<path class="s" d="M118 104 L112 98 M124 100 L124 92 M130 104 L136 98"/>`+
+  T(234,150,'ťuk ťuk')+`<path class="cam" d="M8 22 L60 22"/>`;};
+A['4.3c']=()=>ignition(28,'rrr… nič.','left');
+
+A['4.4']=()=>`<path class="s f" d="M40 184 Q60 150 120 146 L190 146 Q240 150 262 184 Z"/>
+  <circle class="s w" cx="150" cy="84" r="54"/>
+  <path class="s k" d="M98 78 Q100 26 152 28 Q196 30 202 62 Q180 46 150 50 Q122 54 112 90 Q104 90 98 78 Z"/>
+  <path class="s w" d="M202 74 L218 98 L201 103"/>
+  <path class="s" d="M174 74 Q183 79 192 74 M172 64 L193 68 M188 118 L200 116"/>
+  <path class="s w" d="M136 78 Q124 80 127 94 Q130 105 140 102"/>
+  <path class="s soft" d="M206 116 Q222 110 238 116 M208 122 Q226 122 244 130 M206 110 Q218 102 232 104"/>`+
+  T(244,100,'pfff…');
+
+A['4.5a']=()=>setupA()+carRear(127,136,1.3,false)+person(214,137,0.68,{pose:'reach',dir:-1})+
+  `<path class="s soft" d="M196 90 L204 86 M198 98 L208 98 M196 106 L204 110"/>`+T(228,62,'?!');
+A['4.5b']=()=>setupA()+carRear(127,136,1.3,true)+can(196,118,0.55)+person(222,137,0.68,{dir:-1});
+
+A['4.6']=()=>`<circle class="fsoft" cx="160" cy="120" r="50"/>
+  <path class="cut" d="M110 110 L210 110 M114 100 L206 100 M120 90 L200 90"/>
+  <path class="s w" d="M-4 120 L324 120 L324 184 L-4 184 Z"/>
+  <path class="s" d="M0 120 L320 120"/><path class="s soft" d="M0 138 Q80 130 160 138 Q240 146 320 136 M0 160 Q100 150 200 162 Q260 168 320 158"/>
+  <path class="b" d="M20 40 L70 40 M240 30 L300 30 M250 52 L290 52"/>`+
+  T(18,172,'glg glg glg','sfx')+T(196,172,'(mimo obraz)','lbl');
+
+A['4.7']=()=>`<path class="s f" d="M-4 30 Q160 10 324 40 L324 184 L-4 184 Z"/>
+  <path class="s w" d="M-4 30 Q160 10 324 40 L324 52 Q160 24 -4 42 Z"/>
+  <path class="s" d="M60 50 Q110 98 202 84"/><path class="s soft dash" d="M64 60 Q112 106 208 94"/>`+
+  lighter(146,34,1.8,-20)+fist(122,112,1.6,-62)+
+  `<path class="s soft" d="M196 62 L216 32 M208 72 L230 42"/><path class="cam" d="M240 120 L304 120"/>`+T(240,138,'ide preč','camt');
+
+A['4.8']=()=>setupA()+carRear(127,136,1.3,true)+person(104,137,0.68,{pose:'crouch'})+
+  `<path class="bf" d="M60 140 Q120 134 200 140 Q150 150 70 148 Z"/>`;
+
+A['4.9']=()=>`<path class="s" d="M0 150 Q160 140 320 152"/>`+sand(60,5,(x,y)=>y<152)+
+  `<ellipse class="bf" cx="210" cy="164" rx="100" ry="12"/>`+
+  lighter(150,36,2.2,6)+fist(112,128,1.6,-15)+
+  `<path class="s w" d="M142 104 Q150 78 165 62 Q172 59 172 66 Q164 84 156 106 Z"/>
+   <path class="spark" d="M176 50 L188 40 M178 57 L194 55 M171 46 L175 32"/>`+
+  T(200,40,'škrt… škrt…');
+
+A['4.10']=()=>setupA()+`<ellipse class="fsoft" cx="166" cy="136" rx="64" ry="6"/>`+carRear(127,136,1.3,true)+
+  flame(150,112,34,52)+flame(176,104,40,68)+flame(198,116,26,40)+
+  `<path class="b" d="M168 30 Q160 18 172 8 M186 34 Q196 20 186 6"/>`+
+  person(262,182,1.25,{pose:'walk'});
+
+/* ---------- content ---------- */
+const scenes=[
+ {n:1,where:'EXT. Bytovka',light:'Deň, plné slnko'},
+ {n:2,where:'EXT. Novinový stánok',light:'Deň'},
+ {n:3,where:'EXT. Čerpacia stanica',light:'Deň'},
+ {n:4,where:'EXT. Cesta púšťou',light:'Podvečer → západ slnka'}];
+
+const shots=[
+ {s:1,n:'1.1',size:'Celok',cam:'statická',act:'Koleník vychádza z dverí bytovky. Pekný slnečný deň.',snd:'Ruch sídliska, nástup hudby.'},
+ {s:1,n:'1.2',size:'Polocelok',cam:'jazda vzad',act:'Pohľad na neho. Ide ku kamere, v pohode, okuliare na nose.'},
+ {s:1,n:'1.3',size:'Detail',cam:'statická',act:'Kľúč v ruke. Stlačí odomykanie na ovládači.',snd:'Klik. Auto nereaguje.'},
+ {s:1,n:'1.4',size:'Polocelok',cam:'statická',act:'Príde k autu, potiahne kľučku. Neotvorí sa.'},
+ {s:1,n:'1.5',size:'Detail',cam:'statická',act:'Musí strčiť kľúč do zámku dverí a odomknúť ručne.',snd:'Mechanické cvaknutie.'},
+
+ {s:2,n:'2.1',size:'Polocelok',cam:'statická',act:'Koleník sa zastaví pri trafike.'},
+ {s:2,n:'2.2',size:'Detail',cam:'statická',act:'Detail na cigarety, ale vo frame v popredí stojí zapaľovač.'},
+ {s:2,n:'2.3',size:'POV z búdky',cam:'statická',act:'Pohľad zvnútra stánku. Koleník berie zapaľovač s logom Dacia.',snd:'Predavač mimo obraz: „Hotovosť, prosím.“'},
+ {s:2,n:'2.4',size:'Celok',cam:'statická',act:'Berie zapaľovač a sadá si do auta.',snd:'Dvere.'},
+
+ {s:3,n:'3.1',size:'Celok',cam:'statická',act:'Pumpa, v popredí tabuľa: vidíme, koľko stojí benzín. Koleník berie pištoľ a za autom niečo robí, ako keby tankoval. Nevidíme čo.',snd:'Pípnutie stojana.'},
+ {s:3,n:'3.2',size:'Polodetail',cam:'statická',act:'Odhalenie: netankuje do auta, ale do bandasky.',snd:'Tečúci benzín.'},
+ {s:3,n:'3.3',size:'Polocelok',cam:'statická',act:'Hodí bandasku do kufra a ide si sadnúť na miesto šoféra.'},
+ {s:3,n:'3.4',size:'Detail',cam:'statická · INT. auto',act:'Chce pustiť navigáciu. Displej nereaguje.',snd:'Ťuk ťuk.'},
+ {s:3,n:'3.5',size:'Celok',cam:'statická',act:'Odchádza z pumpy.'},
+
+ {s:4,n:'4.1',size:'Dron',cam:'let s autom',act:'Auto ide prázdnou cestou. Motor skape, Koleník zapne výstražné blikače.',snd:'Motor kašle a dobieha.'},
+ {s:4,n:'4.2',size:'Dron',cam:'pokračuje vpred',act:'Dron auto predbehne, lebo predpokladá, že auto pôjde ďalej. Auto zastaví uprostred cesty.'},
+ {s:4,n:'4.3a',size:'Detail',cam:'statická → švenk',act:'Snaží sa naštartovať. Detail na zapaľovanie, nejde to.',snd:'Štartér.'},
+ {s:4,n:'4.3b',size:'Detail',cam:'švenk na ukazovateľ',act:'Ukazovateľ benzínu: plná nádrž. Poklepe naň, stále plná.'},
+ {s:4,n:'4.3c',size:'Detail',cam:'švenk späť',act:'Späť na zapaľovanie. Stále nenaštartuje.'},
+ {cont:true,s:4,txt:'4.3 a–c je jeden záber: švenk zo zapaľovania na ukazovateľ a späť, bez strihu.'},
+ {s:4,n:'4.4',size:'Detail',cam:'statická',act:'Detail na Koleníka. Povzdych. Otvorí dvere.',snd:'Povzdych, dvere.'},
+ {s:4,n:'4.5a',size:'Celok',cam:'statická',setup:true,act:'Auto na púšti. Ide ku kufru, kufor nejde otvoriť.',alt:'Natočiť aj verziu, kde ho otvorí hneď, ak to v strihu bude príliš natiahnuté.'},
+ {s:4,n:'4.5b',size:'Celok',cam:'statická',setup:true,act:'Kufor sa podarí otvoriť, vyťahuje bandasku s benzínom.'},
+ {s:4,n:'4.6',size:'Celok',cam:'statická',act:'Záber na zapadajúce slnko.',snd:'Vylievanie benzínu z bandasky, mimo obraz.'},
+ {s:4,n:'4.7',size:'Detail',cam:'statická',act:'Koleník vyťahuje z vrecka zapaľovač a odchádza zo záberu.'},
+ {s:4,n:'4.8',size:'Celok',cam:'statická',setup:true,act:'Ten istý záber ako pri kufri. Koleník sa zohne k zemi.'},
+ {s:4,n:'4.9',size:'Detail',cam:'statická',act:'Dacia zapaľovač pri zemi. Nejde mu zapáliť, potom chytí.',snd:'Škrt… škrt…',alt:'Natočiť aj čistú verziu, kde zapáli hneď.'},
+ {s:4,n:'4.10',size:'Celok',cam:'statická',setup:true,vo:true,act:'Odchádza od auta, ktoré pomaly vzbĺkne.',snd:'Hudba vrcholí.',voTxt:'„Dacia. Podpáľ to a choď pešo.“'}
+];
+
+/* ---------- render ---------- */
+const panels=shots.filter(x=>!x.cont);
+const nShots=new Set(panels.map(x=>x.n.replace(/[a-c]$/,''))).size;
+document.getElementById('facts').innerHTML=
+ `<span><b>4</b> obrazy</span><span><b>${nShots}</b> záberov</span><span><b>${panels.length}</b> políčok</span><span>Hlavná postava: <b>Koleník</b></span><span>Hudba: <b>indie rock v duchu Arctic Monkeys</b></span>`;
+
+const esc=s=>s.replace(/"/g,'&quot;');
+let html='';
+for(const sc of scenes){
+  html+=`<section class="scene" id="obraz-${sc.n}"><div class="slug"><h2>Obraz ${sc.n}</h2><span class="where">${sc.where}</span><span class="light">${sc.light}</span></div><div class="grid">`;
+  for(const x of shots.filter(v=>v.s===sc.n)){
+    if(x.cont){html+=`<p class="cont">${x.txt}</p>`;continue;}
+    const tags=(x.setup?`<span class="tag setup">Setup A</span>`:'')+(x.alt?`<span class="tag alt">Alt</span>`:'')+(x.vo?`<span class="tag vo">VO</span>`:'');
+    html+=`<article class="shot">
+      <div class="frame"><svg class="sk" viewBox="0 0 320 180" role="img" aria-label="${esc(x.n+': '+x.act)}"><g class="art">${A[x.n]()}</g></svg>${tags}</div>
+      <div class="head"><span class="num">${x.n}</span><span class="size">${x.size}</span><span class="cam">${x.cam}</span></div>
+      <p class="act">${x.act}</p>
+      ${x.snd?`<p class="note"><b>Zvuk</b>${x.snd}</p>`:''}
+      ${x.voTxt?`<p class="note von"><b>VO</b>${x.voTxt}</p>`:''}
+      ${x.alt?`<p class="note altn"><b>Alt</b>${x.alt}</p>`:''}
+    </article>`;
+  }
+  html+=`</div></section>`;
+}
+document.getElementById('board').innerHTML=html;
+</script>
+</body>
+</html>
