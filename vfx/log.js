@@ -8,6 +8,12 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Clay v03", when: "25. 11. 2026",
+   title: "Clay s novým terénom: cesta na násype",
+   html: `<p>Celý záber v clayi so zmenami zo stillok v03: zem vľavo 1,5 m a vpravo 0,5 m pod cestou, mäkký svah od krajnice, vegetácia posadená na novom povrchu, bez dosky pri ceste.</p>
+<p>Tmavé pásy smerom doľava a doprava (snímky 62, 120, 150) sú asfalt odbočiek z plate. Drží ich maska predĺžená na 40 m, a keďže je okolo biely clay, vyzerajú ako tmavá čiara. Ak budú rušiť aj vo farbe, masku skrátim.</p>`,
+   video: {src: "09_clay_v03.mp4", poster: "09_clay_v03_poster.jpg", cap: "Clay v03 + plate · celý záber · 1280×544"},
+   imgs: [{src: "09_clay_v03_sheet.jpg", cap: "Snímky 62 · 120 · 150 · 174"}]},
   {step: "Krok 5 · Stills v03", when: "25. 11. 2026",
    title: "Cesta na miernom násype: vľavo nižšie, vpravo trochu",
    html: `<p><b>Prečo bol CG svet vysoko:</b> terén mesta má pri renderi modifikátor kopcov (±7 m), takže zem pri ceste bola náhodne 1,4 m nad aj 2,9 m pod cestou, na každej strane inak. Tráva, kríky a rekvizity pritom stáli na úrovni cesty a pri krajnici tvorili „val“.</p>
