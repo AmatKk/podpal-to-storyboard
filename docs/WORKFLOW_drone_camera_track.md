@@ -233,6 +233,41 @@ Then the **clay pass**: the whole CG scene with one grey material override
 (`view_layer.material_override`), Cycles 16 spp + denoise, with the plate road comped on top. This is the best way to
 judge track + ground level in motion before any look development.
 
+### 5b. "The track shakes" at the low end of the shot: diagnose before you smooth
+
+What we saw: from ~5 s (camera dropping from 5 m to 2.7 m) the CG started to "shake" against the plate.
+**Do not smooth the camera blindly.** Smoothing a correct solve detaches it from the plate. Measure first:
+
+1. **Camera step lengths** `|C[f+1] - C[f]|`. Our plate alternated **0.96 m / 1.45 m** (ratio 2:3) through the whole
+   shot. That is pulldown judder: the source was shot at 60 fps and delivered at 23.976 by dropping frames
+   (ffprobe: 174 frames @ 24000/1001, so it is baked into the delivery). The solve follows it correctly.
+2. **Why it only shows when low:** if the CG ground is not exactly at the real ground height, every frame it slips by
+   (height error / camera height) × (ground image motion). Uneven 2:3 steps turn that slip into a visible
+   shake. With a 0.6 m height error at 2.8 m camera height, that is ~20 % of the ground motion, i.e. 10–20 px per frame.
+   Fix = step 4 (re-level to the road). After that the shake is gone.
+3. **Residual solve noise:** check whether the step pattern breaks anywhere (ours: frames 158–168 at the junction,
+   1.55 / 0.90 / 1.71 / 0.86 instead of 1.46 / 0.96). Fix it with a **local bundle adjustment** on dense KLT tracks
+   (`_scripts/refine_track.py`):
+   - frames ≤ FIX (approved part) stay fixed;
+   - later frames get 6-DOF corrections, with free 3D points;
+   - Cauchy loss plus two rounds of per-track RMS cuts (6 px, then 2.5 px) reject the moving car (it flies with the
+     drone, so its features look static);
+   - a weak 2nd-difference prior on position/rotation (WC=60 px per m/frame², WR=150 px per rad/frame²) keeps the
+     real judder.
+
+   Result: median reprojection error 0.51 px, corrections ≤ 0.06° / a few cm, except one bad frame (0.17° / 24 cm).
+   Re-key the Blender camera with `_scripts/update_camera.py` (no city rebuild needed).
+
+```bash
+_venv/Scripts/python.exe -I _scripts/refine_track.py <root> 90     # -> solve/solve_refined.json
+cp solve/solve.json solve/solve_colmap_leveled.json && cp solve/solve_refined.json solve/solve.json
+blender -b --factory-startup VFX_mesto.blend --python _scripts/update_camera.py -- <root>
+```
+
+Be careful with a naive "ground slip" metric. Raycasting lower-image features to z = 0 and comparing them with KLT
+mixes in the car and bushes (z up to +2.6 m). It reports 20–80 px "slip" even on a correct camera. Use
+triangulated static tracks (BA residual) instead.
+
 ---
 
 ## 6. Road centre line in 3D (`road_path.py`)
@@ -291,6 +326,7 @@ the plate road meets the horizon, so the CG road takes over there.
 | Megascans props 100× too large | some FBX exported in centimetres | per-asset scale fix using vertex extents (object `dimensions` are stale in headless) |
 | `matrix_world`/`dimensions` read as 0 in headless | depsgraph not evaluated | `view_layer.update()` or compute from vertices/locations |
 | Transparent sky lost | compositor haze mix dropped alpha | `Set Alpha` node |
+| CG "shakes" only when the drone is low | 2:3 pulldown judder in the plate × CG ground at the wrong height | re-level (step 4); then fix local solve noise with `refine_track.py` (step 5b); never blind-smooth |
 | Small props invisible | scattered grass/shrubs grew over them | keep a clear radius around props in the scatter |
 
 ## What to give the human, in order

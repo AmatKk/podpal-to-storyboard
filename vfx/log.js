@@ -8,6 +8,19 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Clay v02", when: "25. 11. 2026",
+   title: "Track sa od 5 s už netrasie + odbočky v križovatke",
+   html: `<p><b>Prečo sa to od 5 s triaslo:</b> samotné video má zapečený judder. Dron sa striedavo posunie o 0,96 a 1,45 m na snímku (pomer 2 : 3), typický podpis 60 fps záznamu prevedeného na 23,976 zahadzovaním snímok. Kým dron letí vysoko, nevidno to. Od 5 s je však nízko (4 → 2,7 m) a CG zem bola asi 0,6 m nad reálnou zemou, takže sa pri každom dlhšom kroku posunula voči plate viac. Vyzeralo to ako trasenie tracku.</p>
+<p><b>Oprava:</b></p>
+<ul><li>CG svet je posadený presne na asfalt z plate (re-level podľa bodov na ceste).</li>
+<li>Kamera od snímky 91 je dopočítaná z ~1 900 pevných bodov scény (lokálny bundle adjustment, body na aute vyradené). Snímky 1–90 ostali bez zmeny. Opravy sú pod 0,06° a pár cm, priemerná chyba 0,5 px. Vyrovnal sa aj šum v križovatke (snímky 158–168).</li></ul>
+<p><b>Križovatka (~6 s):</b> podľa modrých čiar pribudli CG odbočky doľava aj doprava (6 m asfalt, 300 m do diaľky). Maska drží prvých ~13 m asfaltu odbočiek z plate a ďalej pokračuje CG. Tráva, kríky a rekvizity na odbočkách sú odpratané. V clayi je asfalt sivý ako zem, rozdiel bude vidno až na stillkach s materiálmi.</p>`,
+   video: {src: "06_clay_v02.mp4", poster: "06_clay_v02_poster.jpg", cap: "Clay v02 + plate · celý záber · 1280×544"},
+   imgs: [{src: "06_clay_v02_sheet.jpg", cap: "Snímky 1 · 90 · 120 · 162 (križovatka)"}]},
+  {step: "Krok 5 · Clay A/B", when: "25. 11. 2026",
+   title: "Porovnanie od 4 s: hore v01, dole v02",
+   html: `<p>Hore starý clay (CG zem príliš vysoko, kĺže a trasie sa voči plate), dole nový. Sleduj prechod krajnice z plate do CG terénu pri nízkom prelete.</p>`,
+   video: {src: "06_clay_ab.mp4", poster: "06_clay_ab_poster.jpg", cap: "Hore v01 · dole v02 · snímky 97–174"}},
   {step: "Krok 5 · Clay", when: "25. 11. 2026",
    title: "Clay render celého záberu s autom",
    html: `<p>Celých 174 snímok: CG scéna v sivej clay (bez textúr), cez ňu cesta, krajnica a auto z plate cez masku. Je tu vidno, ako track drží v pohybe: zem, kríky aj mesto sa hýbu presne s kamerou, od pohľadu zhora až po nízky prelet za autom.</p>
