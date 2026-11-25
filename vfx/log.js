@@ -8,6 +8,22 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v04", when: "25. 11. 2026",
+   title: "Nová maska, junkyard s horiacimi pneumatikami",
+   html: `<p><b>Maska je prerobená.</b> Predtým z plate ostával široký rozmazaný pás krajnice, ktorý pôsobil umelo. Teraz:</p>
+<ul><li>z plate ostáva len asfalt, auto a rozšírené rohy križovatky,</li>
+<li>hranu určuje farebný kľúč priamo z plate (asfalt má nízku sýtosť, suchá tráva vysokú), takže strih ide po skutočnom okraji asfaltu,</li>
+<li>maska nesie vzdialenosť od osi cesty v metroch, takže hranice sa dajú ladiť bez nového renderu,</li>
+<li>až po asfalt je CG krajnica: ~88 tisíc trsov trávy prefarbenej na suchú, aby sedela k jesennému plate.</li></ul>
+<p><b>Junkyard vpravo</b> (70 × 130 m, ~1 100 Megascans objektov):</p>
+<ul><li>tri kopy pneumatík, stohy pneumatík, dvor s barelmi a plynové fľaše,</li>
+<li>kopy šrotu (suť obsypaná ozubenými kolesami, ráfikmi, rúrami a plechmi),</li>
+<li>palety, big bagy, betónové rúry, dosky a obvod z betónových zátarasov.</li></ul>
+<p><b>Horiace pneumatiky:</b> simulácia dymu a ohňa (Mantaflow) s predbehom od snímky −80, aby dym v prvom zábere už stúpal. Dym ide cez vlastnú render vrstvu, aby ho nezbelil opar.</p>
+<p><b>Ďalej:</b> pribudnú stiahnuté autovraky, kontajnery, pneumatiky a šrot, aby bol junkyard plnší a mal veľké tvary.</p>`,
+   imgs: [{src: "10_v04_0001.jpg", cap: "Snímka 1 · široký záber, junkyard vpravo"}, {src: "10_v04_0020.jpg", cap: "Snímka 20"},
+          {src: "10_v04_0040.jpg", cap: "Snímka 40"}, {src: "10_v04_0120.jpg", cap: "Snímka 120 · nová maska"},
+          {src: "10_v04_0162.jpg", cap: "Snímka 162 · križovatka"}, {src: "10_v04_0174.jpg", cap: "Snímka 174"}]},
   {step: "Krok 5 · Clay v03", when: "25. 11. 2026",
    title: "Clay s novým terénom: cesta na násype",
    html: `<p>Celý záber v clayi so zmenami zo stillok v03: zem vľavo 1,5 m a vpravo 0,5 m pod cestou, mäkký svah od krajnice, vegetácia posadená na novom povrchu, bez dosky pri ceste.</p>
