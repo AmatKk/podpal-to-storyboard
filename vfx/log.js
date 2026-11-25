@@ -8,6 +8,23 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v02", when: "25. 11. 2026",
+   title: "Stillky s Megascans: smeti, stavba, odbočky",
+   html: `<p>Prvé stillky po prestavbe scény z Megascans (Junkyard, Unfinished Building, Roadside Construction, Slate Quarry) a s opravenou kamerou. Cycles 64 spp, ~10 s na snímku, motion blur vypnutý (plate je točený krátkou uzávierkou).</p>
+<p><b>Čo pribudlo:</b></p>
+<ul><li>Smeti a haraburdie v zhlukoch popri ceste (10–17 m od osi).</li>
+<li>Stavebný úsek vpravo s betónovými zátarasmi, kužeľmi, paletami a rúrami (dobre ho vidno na snímke 174).</li>
+<li>Rozostavaný betónový skelet vľavo za cestou a balvany z lomu.</li>
+<li>Koberec trávy a buriny z reálnych skenov namiesto tmavých trsov.</li>
+<li>Cesta pokračuje podľa modrej čiary, CG svet sedí na asfalte. V križovatke (snímka 162) sú CG odbočky doľava aj doprava.</li></ul>
+<p><b>Čo ešte nesedí (ďalšie kolo):</b></p>
+<ul><li>Obloha je biela a plochá, chýba teplé protisvetlo z plate.</li>
+<li>Stromy sú stále hnedočervené a tvarom ako savana. Vymením ich za ihličnany a brezy.</li>
+<li>CG asfalt pravej odbočky je príliš modrý a čistý oproti plate a pri kamere (snímka 174, vpravo dole) má rušivý biely okraj.</li>
+<li>Rekvizity sú zatiaľ drobné a pri tejto výške dronu sa strácajú. Pridám väčšie kusy bližšie ku krajnici.</li></ul>`,
+   imgs: [{src: "07_ms_0001.jpg", cap: "Snímka 1 · začiatok"}, {src: "07_ms_0090.jpg", cap: "Snímka 90"},
+          {src: "07_ms_0120.jpg", cap: "Snímka 120 · 5 s"}, {src: "07_ms_0162.jpg", cap: "Snímka 162 · križovatka s CG odbočkami"},
+          {src: "07_ms_0174.jpg", cap: "Snímka 174 · koniec, stavebný úsek vpravo"}]},
   {step: "Krok 5 · Clay v02", when: "25. 11. 2026",
    title: "Track sa od 5 s už netrasie + odbočky v križovatke",
    html: `<p><b>Prečo sa to od 5 s triaslo:</b> samotné video má zapečený judder. Dron sa striedavo posunie o 0,96 a 1,45 m na snímku (pomer 2 : 3), typický podpis 60 fps záznamu prevedeného na 23,976 zahadzovaním snímok. Kým dron letí vysoko, nevidno to. Od 5 s je však nízko (4 → 2,7 m) a CG zem bola asi 0,6 m nad reálnou zemou, takže sa pri každom dlhšom kroku posunula voči plate viac. Vyzeralo to ako trasenie tracku.</p>
