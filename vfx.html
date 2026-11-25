@@ -72,7 +72,7 @@ document.getElementById("steps").innerHTML=S.map(s=>`<li class="${s.state||""}">
 document.getElementById("log").innerHTML=L.map(e=>`<article class="entry">
   <div class="meta"><span class="step">${e.step}</span><span>${e.when}</span></div>
   <h2>${e.title}</h2>${e.html||""}
-  ${e.video?`<figure><video src="vfx/img/${e.video.src}" controls loop muted playsinline preload="metadata" style="width:100%;background:#000;display:block"></video><figcaption>${e.video.cap||""}</figcaption></figure>`:""}
+  ${e.video?`<figure><video src="vfx/img/${e.video.src}" controls loop muted playsinline preload="metadata" ${e.video.poster?`poster="vfx/img/${e.video.poster}"`:""} style="width:100%;background:#000;display:block"></video><figcaption>${e.video.cap||""}</figcaption></figure>`:""}
   ${(e.imgs||[]).length?`<div class="${e.imgs.length>1?"grid2":""}">${e.imgs.map(i=>`<figure><img loading="lazy" src="vfx/img/${i.src}" alt="${i.cap||""}"><figcaption>${i.cap||""}</figcaption></figure>`).join("")}</div>`:""}
 </article>`).join("");
 const lb=document.getElementById("lb");
