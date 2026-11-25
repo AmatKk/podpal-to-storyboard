@@ -8,6 +8,14 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v07", when: "25. 11. 2026",
+   title: "Scéna podľa reálnych leteckých fotiek: lúka, ihličnany, bordel pri poľnej ceste",
+   html: `<p>Podľa 112 reálnych leteckých fotiek (skládky, zarastené plochy, suché lúky, dym z pneumatík) je scéna prerobená:</p>
+<ul><li><b>Zem:</b> namiesto piesku a bodkovanej trávy je súvislá suchá lúka z Megascans tráv (divoká tráva, suchá tráva, trstina), ~500 tisíc trsov. Hustota a druhy idú v nepravidelných fľakoch. Pod porastom je reálna textúra suchej trávy so zemou, aj v diaľke.</li>
+<li><b>Stromy:</b> savanové stromy nahradili jedle, borovice a menšie listnáče (Poly Haven) v skupinkách a remízkach, ako na fotkách.</li>
+<li><b>Junkyard:</b> nie je oplotený pozemok. Hlinená poľná cesta odbočuje doprava a bordel je rozsypaný popri nej do trávy a krovia: vysypané kopy, vraky medzi stromami, opustený kontajner, dve horiace kopy pneumatík. Tráva ostáva všade okrem koľají.</li></ul>
+<p><b>Ďalej:</b> junkyard je z diaľky ešte málo čitateľný a dym pri pravom okraji je orezaný. Ďalej treba oblohu, svetlo a vyladenie farieb celku.</p>`,
+   imgs: [{src: "12_v07_0001.jpg", cap: "Snímka 1"}, {src: "12_v07_0020.jpg", cap: "Snímka 20"}, {src: "12_v07_0040.jpg", cap: "Snímka 40"}]},
   {step: "Krok 5 · Stills v05", when: "25. 11. 2026",
    title: "Junkyard so stiahnutými modelmi: vraky, kontajnery, pneumatiky",
    html: `<p>Do junkyardu pribudli veľké tvary zo stiahnutých Megascans modelov (~145 kusov):</p>
