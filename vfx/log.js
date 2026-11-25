@@ -8,6 +8,15 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v05", when: "25. 11. 2026",
+   title: "Junkyard so stiahnutými modelmi: vraky, kontajnery, pneumatiky",
+   html: `<p>Do junkyardu pribudli veľké tvary zo stiahnutých Megascans modelov (~145 kusov):</p>
+<ul><li>rady autovrakov vzadu, časť stlačená do stohov po 2–3 kusoch, ďalšie vraky voľne po ploche (niektoré na boku alebo na streche),</li>
+<li>modré a červené lodné kontajnery pozdĺž zadnej strany (jeden na druhom) a jeden pri bráne,</li>
+<li>stohy veľkých pneumatík z nakladačov, pridané aj do horiacich kôp,</li>
+<li>hrdzavé dvere a súčiastky po celej ploche.</li></ul>
+<p>Na rozbalenie som upravil nástroj, aby zvládol aj „ploché“ Fab zipy. Kopu betónovej sute som vyradil, sken leží na boku.</p>`,
+   imgs: [{src: "11_v05_0001.jpg", cap: "Snímka 1"}, {src: "11_v05_0020.jpg", cap: "Snímka 20"}, {src: "11_v05_0040.jpg", cap: "Snímka 40"}]},
   {step: "Krok 5 · Stills v04", when: "25. 11. 2026",
    title: "Nová maska, junkyard s horiacimi pneumatikami",
    html: `<p><b>Maska je prerobená.</b> Predtým z plate ostával široký rozmazaný pás krajnice, ktorý pôsobil umelo. Teraz:</p>
