@@ -57,7 +57,7 @@ th{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.08em;t
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow"><a href="./">Podpáľ to a choď pešo</a> · VFX skúška</div>
+    <div class="eyebrow"><a href="./">Podpáľ to a choď pešo</a> · VFX skúška · <a href="https://miro.com/app/board/uXjVEd28bMs=/" target="_blank" rel="noopener" style="color:var(--blue)">Miro board ↗</a></div>
     <h1>Dron záber · <em>CG pozadie</em></h1>
     <p class="lead">Skúšobný dronový záber: z plate ostáva len cesta, auto a tráva pri krajnici, všetko ostatné nahrádza CG sídlisko, vedenie a rafinéria z Blendru. Denník práce, najnovšie hore.</p>
     <ul class="steps" id="steps"></ul>
@@ -72,6 +72,7 @@ document.getElementById("steps").innerHTML=S.map(s=>`<li class="${s.state||""}">
 document.getElementById("log").innerHTML=L.map(e=>`<article class="entry">
   <div class="meta"><span class="step">${e.step}</span><span>${e.when}</span></div>
   <h2>${e.title}</h2>${e.html||""}
+  ${e.video?`<figure><video src="vfx/img/${e.video.src}" controls loop muted playsinline preload="metadata" style="width:100%;background:#000;display:block"></video><figcaption>${e.video.cap||""}</figcaption></figure>`:""}
   ${(e.imgs||[]).length?`<div class="${e.imgs.length>1?"grid2":""}">${e.imgs.map(i=>`<figure><img loading="lazy" src="vfx/img/${i.src}" alt="${i.cap||""}"><figcaption>${i.cap||""}</figcaption></figure>`).join("")}</div>`:""}
 </article>`).join("");
 const lb=document.getElementById("lb");

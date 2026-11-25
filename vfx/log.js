@@ -1,13 +1,24 @@
 // VFX dron test – work log data. Newest entry first.
 window.VFX_STEPS = [
   {name: "1 · Príprava plate", state: "done"},
-  {name: "2 · 3D track kamery", state: "now"},
-  {name: "3 · Maska cesty"},
+  {name: "2 · 3D track kamery", state: "done"},
+  {name: "3 · Maska cesty", state: "now"},
   {name: "4 · CG prostredie"},
   {name: "5 · Stills na schválenie"},
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 2 · 3D track", when: "25. 11. 2026",
+   title: "Track sedí: 174/174 snímok",
+   html: `<p>Solve vyšiel. Zaregistrovaných je všetkých 174 snímok, máme 12 220 3D bodov a priemernú chybu 0,78 px. Pri skomprimovanom stiahnutom videe s motion blurom je to dobrý výsledok.</p>
+<ul><li><b>Objektív:</b> 18,3 mm ekvivalent (horizontálne ~89°), skreslenie takmer nulové.</li>
+<li><b>Orientácia:</b> rovina zeme nájdená z 3D bodov (RANSAC), +Z hore, +Y v smere letu.</li>
+<li><b>Mierka:</b> podľa auta (Audi A6 Avant, šírka 1,87 m) má cesta ~7,0 m medzi krajnými čiarami. Prvý odhad z posledného snímku bol o 40 % vedľa, lebo tam sa cesta pri križovatke rozširuje.</li>
+<li><b>Pohyb:</b> dron klesá z ~23 m na ~3 m nad cestou a za 7,3 s preletí ~200 m (~100 km/h).</li></ul>
+<p><b>Kontrola:</b> mriežka 5 × 5 m a oranžové kužele sú CG v Blendri, vyrenderované so solvnutou kamerou cez plate. Celý záber sedia na ceste a nekĺžu. Mriežka končí po 300 m, preto je pod horizontom vidieť jej okraj.</p>
+<p>Scéna: <code>VFX_Dron_test/VFX_Dron_test.blend</code> (kamera <code>CAM_solve</code>, plate ako pozadie kamery, mračno bodov).</p>`,
+   video: {src: "02_track_check.mp4", cap: "Track check: CG mriežka + kužele cez plate (960×408)"},
+   imgs: [{src: "02_track_check.jpg", cap: "Snímky 1 · 101 · 156 · 174"}]},
   {step: "Krok 2 · 3D track", when: "25. 11. 2026",
    title: "Spúšťam solve kamery",
    html: `<p>Blender bol zavretý, takže solve kamery robím mimo neho cez COLMAP (photogrammetria / structure-from-motion). Výsledok, teda pohyb kamery, ohnisko a mračno 3D bodov, potom prenesiem do Blendru ako animovanú kameru.</p>
