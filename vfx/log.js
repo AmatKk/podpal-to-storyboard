@@ -3,11 +3,24 @@ window.VFX_STEPS = [
   {name: "1 · Príprava plate", state: "done"},
   {name: "2 · 3D track kamery", state: "done"},
   {name: "3 · Maska cesty", state: "done"},
-  {name: "4 · CG prostredie", state: "now"},
-  {name: "5 · Stills na schválenie"},
+  {name: "4 · CG prostredie", state: "done"},
+  {name: "5 · Stills na schválenie", state: "now"},
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v01", when: "25. 11. 2026",
+   title: "Prvé stills: začiatok · stred · koniec",
+   html: `<p>Prvý kompozit troch snímok: plate cez masku cesty, pod ním CG z Blendru (Cycles, 64 spp, ~6 s na snímku). Na CG je zladenie farieb podľa plate s jednými koeficientmi pre celý záber, aby neblikalo. Navrch jemné rozostrenie a zrno.</p>
+<p><b>Čo už sedí:</b> kamera, mierka a horizont. Mesto, komíny, stožiare a vedenie sú na správnom mieste a krajnica z plate prechádza do CG terénu.</p>
+<p><b>Čo ešte nesedí (ďalšie kolo):</b></p>
+<ul><li>Obloha je po zladení farieb sivá a matná, plate má svetlú teplú oblohu s protisvetlom. Treba oddeliť oblohu a opar a zladiť ich zvlášť.</li>
+<li>Stromy sú príliš červené a tvarom pôsobia ako savana. Plate má ihličnany a brezy, takže vymením zdroje vegetácie a ubratím jesenné farbenie.</li>
+<li>CG má tvrdé slnko s ostrými tieňmi, plate mäkké nízke svetlo. Treba slabšie slnko, viac oblohy a opar podľa vzdialenosti.</li>
+<li>Odbočka na konci (vpravo) je maskou rovno odrezaná.</li></ul>
+<p><b>Cestou opravené:</b> po presune projektu do <code>4_Rocnik</code> chýbalo 95 textúr (ružové plochy na prvom pokuse), teraz sú prelinkované v kópii. Motion blur v CG bol oveľa silnejší ako na plate, ten je točený krátkou uzávierkou, tak som ho vypol. Prechod masky je užší.</p>`,
+   imgs: [{src: "04_comp_0001.jpg", cap: "Snímka 1: kompozit"}, {src: "04_comp_0090.jpg", cap: "Snímka 90: kompozit"},
+          {src: "04_comp_0174.jpg", cap: "Snímka 174: kompozit"}, {src: "04_plate_vs_comp.jpg", cap: "Vľavo pôvodný plate, vpravo kompozit v01"},
+          {src: "04_v0_missing_tex.jpg", cap: "Pokus v00: chýbajúce textúry (ružová) a rovnaká kamera na všetkých snímkach, opravené"}]},
   {step: "Krok 4 · CG prostredie", when: "25. 11. 2026",
    title: "Staviam mesto okolo dronovej kamery",
    html: `<p>Mesto z <code>Dacia_mesto.blend</code> (sídlisko, rafinéria, stožiare, komíny) beží v <b>kópii</b> súboru <code>VFX_Dron_test/VFX_mesto.blend</code>, originál ostáva nedotknutý.</p>
