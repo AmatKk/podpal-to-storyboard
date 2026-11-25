@@ -49,9 +49,7 @@ h1 em{font-style:normal;color:var(--fire)}
 table{border-collapse:collapse;font-size:14px;width:100%;max-width:760px}
 td,th{border-bottom:1px solid var(--line);padding:6px 10px 6px 0;text-align:left;vertical-align:top}
 th{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out;z-index:9}
-.lb img{max-height:100%;width:auto}
-[hidden],.lb[hidden]{display:none!important}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -64,8 +62,8 @@ th{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.08em;t
   </header>
   <main class="log" id="log"></main>
 </div>
-<div class="lb" id="lb" hidden><img alt=""></div>
 <script src="vfx/log.js"></script>
+<script src="lightbox.js"></script>
 <script>
 const S=window.VFX_STEPS||[], L=window.VFX_LOG||[];
 document.getElementById("steps").innerHTML=S.map(s=>`<li class="${s.state||""}">${s.name}</li>`).join("");
@@ -75,11 +73,9 @@ document.getElementById("log").innerHTML=L.map(e=>`<article class="entry">
   ${e.video?`<figure><video src="vfx/img/${e.video.src}" controls loop muted playsinline preload="metadata" ${e.video.poster?`poster="vfx/img/${e.video.poster}"`:""} style="width:100%;background:#000;display:block"></video><figcaption>${e.video.cap||""}</figcaption></figure>`:""}
   ${(e.imgs||[]).length?`<div class="${e.imgs.length>1?"grid2":""}">${e.imgs.map(i=>`<figure><img loading="lazy" src="vfx/img/${i.src}" alt="${i.cap||""}"><figcaption>${i.cap||""}</figcaption></figure>`).join("")}</div>`:""}
 </article>`).join("");
-const lb=document.getElementById("lb");
-document.addEventListener("click",ev=>{const t=ev.target;
-  if(t.matches(".entry figure img")){lb.querySelector("img").src=t.src;lb.hidden=false}
-  else if(lb.contains(t)){lb.hidden=true}});
-document.addEventListener("keydown",ev=>{if(ev.key==="Escape")lb.hidden=true});
+Lightbox.attach({root:document.getElementById("log"),selector:".entry figure img",
+  caption:(el,i,n)=>{const art=el.closest(".entry"),t=art.querySelector("h2")?.textContent||"",c=el.alt||"";
+    return `<b>${t}</b>${c}<span>${i+1}/${n}</span>`}});
 </script>
 </body>
 </html>
