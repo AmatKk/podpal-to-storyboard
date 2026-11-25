@@ -8,6 +8,12 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Clay", when: "25. 11. 2026",
+   title: "Clay render celého záberu s autom",
+   html: `<p>Celých 174 snímok: CG scéna v sivej clay (bez textúr), cez ňu cesta, krajnica a auto z plate cez masku. Je tu vidno, ako track drží v pohybe: zem, kríky aj mesto sa hýbu presne s kamerou, od pohľadu zhora až po nízky prelet za autom.</p>
+<p>Cycles, 16 spp + denoise, ~3 s na snímku. Clay je zámerne bez farieb a materiálov. Na realizme scény sa pracuje (Megascans).</p>`,
+   video: {src: "05_clay_comp.mp4", poster: "05_clay_poster.jpg", cap: "Clay render + plate (cesta, auto) · 7,3 s · 1280×544"},
+   imgs: [{src: "05_clay_sheet.jpg", cap: "Snímky 1 · 61 · 121 · 174"}]},
   {step: "Krok 5 · Stills v01", when: "25. 11. 2026",
    title: "Prvé stills: začiatok · stred · koniec",
    html: `<p>Prvý kompozit troch snímok: plate cez masku cesty, pod ním CG z Blendru (Cycles, 64 spp, ~6 s na snímku). Na CG je zladenie farieb podľa plate s jednými koeficientmi pre celý záber, aby neblikalo. Navrch jemné rozostrenie a zrno.</p>
