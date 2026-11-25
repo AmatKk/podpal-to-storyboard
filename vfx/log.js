@@ -8,6 +8,20 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v03", when: "25. 11. 2026",
+   title: "Cesta na miernom násype: vľavo nižšie, vpravo trochu",
+   html: `<p><b>Prečo bol CG svet vysoko:</b> terén mesta má pri renderi modifikátor kopcov (±7 m), takže zem pri ceste bola náhodne 1,4 m nad aj 2,9 m pod cestou, na každej strane inak. Tráva, kríky a rekvizity pritom stáli na úrovni cesty a pri krajnici tvorili „val“.</p>
+<p><b>Oprava:</b></p>
+<ul><li>Okolo cesty je nová zem s presným profilom: plochá krajnica do 6,5 m od osi, potom mäkký svah.</li>
+<li>Vľavo je zem 1,5 m pod cestou, vpravo 0,5 m. Ďalej od cesty (150–320 m) plynulo prechádza späť do kopcov.</li>
+<li>Vegetácia a rekvizity stoja presne na novom povrchu. Odbočky majú vlastné svahy.</li>
+<li>Zvislá doska pri ceste na 2 s bola Megascans rekvizita, je odstránená. Ploché kríky z kariet som nahradil 3D kríkmi.</li>
+<li>Maska odbočiek je predĺžená z 13 na 40 m, takže CG už neprekrýva asfalt ľavej odbočky z plate (snímka 150).</li></ul>
+<p>Hĺbka terénu vľavo a vpravo je jedno číslo pre každú stranu, dá sa ľahko doladiť. Clay v pohybe s touto zmenou príde neskôr.</p>`,
+   imgs: [{src: "08_v03_0001.jpg", cap: "Snímka 1"}, {src: "08_v03_0062.jpg", cap: "Snímka 62 · bez dosky"},
+          {src: "08_v03_0090.jpg", cap: "Snímka 90"}, {src: "08_v03_0120.jpg", cap: "Snímka 120 · 5 s"},
+          {src: "08_v03_0150.jpg", cap: "Snímka 150 · ľavá odbočka z plate"}, {src: "08_v03_0162.jpg", cap: "Snímka 162 · križovatka"},
+          {src: "08_v03_0174.jpg", cap: "Snímka 174 · koniec"}]},
   {step: "Krok 5 · Stills v02", when: "25. 11. 2026",
    title: "Stillky s Megascans: smeti, stavba, odbočky",
    html: `<p>Prvé stillky po prestavbe scény z Megascans (Junkyard, Unfinished Building, Roadside Construction, Slate Quarry) a s opravenou kamerou. Cycles 64 spp, ~10 s na snímku, motion blur vypnutý (plate je točený krátkou uzávierkou).</p>
