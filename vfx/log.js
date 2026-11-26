@@ -8,6 +8,19 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v09", when: "26. 11. 2026",
+   title: "Obloha a svetlo podľa pôvodného záberu, svetlejší dym",
+   html: `<p>Podľa Maťovej poznámky (obloha ako na pôvodnom zábere, dym menej čierny, kvalita ako do filmu):</p>
+<ul><li><b>Obloha priamo z plate:</b> každý pixel oblohy zo všetkých snímok plate je cez solvnutú kameru prevedený na smer vo svete (azimut, výška nad horizontom) a z toho vznikla mapa oblohy. CG obloha sa z nej číta podľa smeru pohľadu, takže sedí aj farebný prechod: teplejšia broskyňová smerom k slnku vľavo, chladnejšia vpravo.</li>
+<li><b>Slnko podľa plate:</b> na plate je slnko ~45° vľavo od smeru letu a 2–3° nad horizontom (zlatá hodinka, takmer bez tieňov). CG malo slnko vpravo a 11° vysoko s tvrdými tieňmi. Teraz svieti HDRI západu slnka natočené na rovnaký smer a stará lampa je vypnutá.</li>
+<li><b>Farby:</b> zladenie CG s plate cez histogram jasu a tónovanie podľa jasu (tyrkysové tiene, teplé svetlá ako grade plate). Predchádzajúci prenos stláčal tiene do fialovočiernej.</li>
+<li><b>Opravená chyba:</b> tmavý rozmazaný pás nad stromami robil „opar pri horizonte“ v kompozite, ktorý bol pásom v obraze bez ohľadu na hĺbku. Je vypnutý, vzdialenostný opar ostáva z Blendru.</li>
+<li><b>Dym</b> je svetlejší sivohnedý a redší.</li>
+<li><b>Poľná cesta</b> k junkyardu: namiesto leteckej textúry (zblízka biele fľaky) je zhutnená hlina s koľajami (snímka 120).</li></ul>
+<p><b>Ešte opravím:</b> prechod plate cesty a CG krajnice (sivý pás za bielou čiarou), pravý roh križovatky na konci (zubatý štrk z plate), rovný okraj poľnej cesty a hladký „koberec“ pri ceste na 120.</p>`,
+   imgs: [{src: "14_v09_0001.jpg", cap: "Snímka 1"}, {src: "14_v09_0040.jpg", cap: "Snímka 40"},
+          {src: "14_v09_0120.jpg", cap: "Snímka 120 · nová poľná cesta"}, {src: "14_v09_0174.jpg", cap: "Snímka 174"},
+          {src: "14_v09_plate_vs_comp.jpg", cap: "Snímka 174: vľavo pôvodný plate, vpravo kompozit"}]},
   {step: "Krok 5 · Stills v08", when: "26. 11. 2026",
    title: "Dym z pneumatík už nie je zrezaný",
    html: `<p>Dym pri pravom okraji mal rovno odseknutý vrch. Simulačný box mal len 46 m na výšku a dym narážal do jeho stropu.</p>
