@@ -8,6 +8,14 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v08", when: "26. 11. 2026",
+   title: "Dym z pneumatík už nie je zrezaný",
+   html: `<p>Dym pri pravom okraji mal rovno odseknutý vrch. Simulačný box mal len 46 m na výšku a dym narážal do jeho stropu.</p>
+<ul><li>Box je teraz 105 m vysoký a natiahnutý po smere vetra, rozlíšenie je vyššie (voxel 0,7 m). Dym stúpa a odchádza z obrazu celý.</li>
+<li>Hustota je nižšia a odtieň trochu svetlejší, takže stĺp má objem a mäkké okraje. Predtým to bola plochá čierna plocha.</li></ul>
+<p><b>Čaká na Maťa:</b> obloha a svetlo (zladiť s plate, alebo protisvetlo a opar ako v Dacia referenciách), koľko dymu, či je tento plate finálny, prach za autom, formát výstupu.</p>`,
+   imgs: [{src: "13_v08_0001.jpg", cap: "Snímka 1"}, {src: "13_v08_0040.jpg", cap: "Snímka 40"},
+          {src: "13_v08_dym_crop.jpg", cap: "Detail dymu, snímka 1"}]},
   {step: "Krok 5 · Stills v07", when: "25. 11. 2026",
    title: "Scéna podľa reálnych leteckých fotiek: lúka, ihličnany, bordel pri poľnej ceste",
    html: `<p>Podľa 112 reálnych leteckých fotiek (skládky, zarastené plochy, suché lúky, dym z pneumatík) je scéna prerobená:</p>
