@@ -307,8 +307,29 @@ the plate road meets the horizon, so the CG road takes over there.
 - Comp: `plate * matte + CG * (1 - matte)`. Grade the CG to the plate with **one** Lab mean/std transfer computed over
   several frames (stable, no flicker). Add a separate sky gradient sampled from the plate, a light horizon haze, a
   0.6 px blur and grain.
-- **Drone plates are often shot with a short shutter.** Compare motion blur before enabling it in CG. Ours had to be
-  off.
+- **Motion blur: measure, don't guess.** Our plate is 60p dropped to 23.976 (2:3 judder), so the shutter can be at
+  most 1/60 s = 0.4 of a 24p frame. In the near field (ground 3–5 m from a low drone) the image moves 60–230 px per
+  frame, so even a short shutter gives 20–60 px streaks. CG without blur looks pasted on. Cycles camera blur at shutter
+  0.5 was about twice the plate's streaks. **0.3** matched (`edge_fix.py`). Judge it on near grass, not on asphalt.
+
+### 8b. The plate ↔ CG seam along the road (`measure_edge.py`, `road_edge.py`, `matte_key.py` v3)
+
+A matte line through grass reads as a cut-out, however exact it is. What worked:
+1. **Measure the real asphalt edge.** Back-project the keyed matte's boundary pixels through the solved camera onto
+   z = 0 and take the median lateral offset per 4 m of road (`road/edge_profile.json`). For us it was ~4.0 m from the
+   centre (lines at 3.44 m).
+2. **Plate only up to that edge** (key band 0.9 m beyond the nominal 3.5 m). Plate side roads and junction flares go
+   to CG: in the plate they are smeared gravel and look like grey smudges in the comp.
+3. **CG gravel shoulder** starting 0.3 m *inside* the measured edge (hidden under the plate), 0.4–1.35 m wide with
+   a ragged noise edge into dry dirt, then the meadow. Thin the meadow on the shoulder: no tall grass growing out of
+   the asphalt.
+4. **Tufts over the seam.** Small dry grass tufts on the asphalt edge, in the gravel and along the grass line, in their
+   own collection. View layer `EDGE` renders **only** them (exclude everything else; holdout leaked alpha from nested
+   collections and instances). Comp them over the plate, only next to the plate region and never over the car
+   (car mask = inside the lanes and not asphalt-coloured).
+5. **Colour continuity.** In comp, mean-shift the CG within 0–1.6 m beyond the edge (metric band from the matte codes)
+   in Lab toward the plate's last 0.3 m. A global grade turns neutral gravel purple, because it subtracts the
+   yellow CG mean.
 
 ---
 
@@ -327,6 +348,7 @@ the plate road meets the horizon, so the CG road takes over there.
 | `matrix_world`/`dimensions` read as 0 in headless | depsgraph not evaluated | `view_layer.update()` or compute from vertices/locations |
 | Transparent sky lost | compositor haze mix dropped alpha | `Set Alpha` node |
 | CG "shakes" only when the drone is low | 2:3 pulldown judder in the plate × CG ground at the wrong height | re-level (step 4); then fix local solve noise with `refine_track.py` (step 5b); never blind-smooth |
+| Grey smear / hard line where plate meets CG | plate keyed far into the gravel / junction flare, CG grass starts at a straight line | 8b: cut at the real asphalt edge, CG shoulder + tufts over the seam, local colour shift |
 | Small props invisible | scattered grass/shrubs grew over them | keep a clear radius around props in the scatter |
 
 ## What to give the human, in order

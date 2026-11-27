@@ -8,6 +8,26 @@ window.VFX_STEPS = [
   {name: "6 · Render + kompozit"},
 ];
 window.VFX_LOG = [
+  {step: "Krok 5 · Stills v10", when: "27. 11. 2026",
+   title: "Nové napojenie plate a CG pri ceste + motion blur",
+   html: `<p>Podľa Maťových poznámok (sivý pás za bielou čiarou, rozmazaný štrk na konci, tvrdá čiara medzi plate a CG):</p>
+<ul><li><b>Zmeraný skutočný okraj asfaltu:</b> hranicu kľúčovanej masky som cez solvnutú kameru premietol na rovinu cesty na každej 3. snímke (138 tisíc bodov). Asfalt končí ~4,0 m od stredu cesty, biele čiary sú na 3,44 m.</li>
+<li><b>Plate iba po hranu asfaltu:</b> štrk, tráva pri ceste a rozšírená križovatka na konci sú teraz CG. Na plate sú to rozmazané sivé fľaky, z ktorých robili tie šmuhy.</li>
+<li><b>Štrková krajnica v 3D:</b> 0,25–0,75 m široký pás štrku s nepravidelným okrajom, ktorý prechádza do suchej hliny a trávy. Začína pod plate, takže na okraji nie je medzera. Vysoká tráva už nerastie priamo z asfaltu.</li>
+<li><b>Trsy trávy cez šev:</b> malé suché trsy na hrane asfaltu, v štrku a na začiatku trávy. Renderujú sa v samostatnej vrstve a v kompozite idú <i>nad</i> plate, takže okraj masky nie je rovná čiara. Nad autom nikdy.</li>
+<li><b>Farba:</b> CG tesne za okrajom je posunuté k farbe posledných 30 cm plate asfaltu, takže sivá plynule prechádza do CG.</li>
+<li><b>Motion blur:</b> plate je pôvodne 60 fps prevedené na 24, uzávierka je teda max. 1/60 s. Pri nízkom prelete sa zem dole v zábere pohne o 60–230 px na snímku, takže aj krátka uzávierka dá 20–60 px šmuhy. CG bez blúru pôsobilo nalepene. Blur je zapnutý (shutter 0,3), dym ho nemá.</li></ul>
+<p><b>Ešte doladím:</b> pravý roh križovatky na snímke 174 (plate končí rovným rezom a CG odbočka je trochu posunutá) a celkovú farbu lúky (je žltšia ako plate).</p>`,
+   imgs: [{src: "16_v10_0001.jpg", cap: "Snímka 1"}, {src: "16_v10_0040.jpg", cap: "Snímka 40"}, {src: "16_v10_0090.jpg", cap: "Snímka 90"},
+          {src: "16_v10_0120.jpg", cap: "Snímka 120"}, {src: "16_v10_0150.jpg", cap: "Snímka 150"}, {src: "16_v10_0174.jpg", cap: "Snímka 174"},
+          {src: "16_v09_vs_v10_0120.jpg", cap: "Snímka 120: hore v09, dole v10"}, {src: "16_v09_vs_v10_0174.jpg", cap: "Snímka 174: hore v09, dole v10"}]},
+  {step: "Krok 2 · 3D track", when: "27. 11. 2026",
+   title: "Track check v03: kužele s opraveným trackom",
+   html: `<p>Rovnaká kontrola ako prvé video s kužeľmi, ale s finálnym trackom: kamera je prerovnaná na povrch cesty a od 5. sekundy lokálne doladená (bundle adjustment). Mriežka 5 × 5 m a oranžové kužele sú CG, vyrenderované solvnutou kamerou cez plate v plnom rozlíšení.</p>
+<p>Kužele majú stáť na asfalte a nekĺzať, aj na konci pri nízkom prelete za autom.</p>
+<p>Scéna: <code>VFX_Dron_test/VFX_Dron_test.blend</code> (kamera <code>CAM_solve</code>), video <code>track_check_v03.mp4</code>.</p>`,
+   video: {src: "15_track_check_v03.mp4", poster: "15_track_poster.jpg", cap: "Track check v03 · celý záber · 1280×544"},
+   imgs: [{src: "15_track_sheet.jpg", cap: "Snímky 1 · 121 · 151 · 174"}]},
   {step: "Krok 5 · Stills v09", when: "26. 11. 2026",
    title: "Obloha a svetlo podľa pôvodného záberu, svetlejší dym",
    html: `<p>Podľa Maťovej poznámky (obloha ako na pôvodnom zábere, dym menej čierny, kvalita ako do filmu):</p>
